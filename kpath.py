@@ -5,13 +5,16 @@
 #
 import math
 import sys
+
+incr = 20 # Default
 #
 #print "This is the name of the script: ", sys.argv[0]
 #print "Number of arguments: ", len(sys.argv)
 #print "The arguments are: " , str(sys.argv)
 
+		
 def usage():
-	print "Usage :: kpath.py [Bravias_Lattice] [a] [b] [c] [alpha] [beta] [gamma] [kpath_dataout]"
+	print "Usage :: kpath.py [Bravias_Lattice] [a] [b] [c] [alpha] [beta] [gamma] [kpath_fileout]"
 	print "**********************************************************************"
 	print "*                      Supported Bravias Lattice                     *"
 	print "**********************************************************************"
@@ -30,34 +33,58 @@ def usage():
 	print "* 13. C-CENTERED MONOCLINIC (MCLC,mS)                                *"
 	print "* 14. TRICLINIC (TRI,aP)                                             *"
 	print "**********************************************************************"
-	cub(1,1,1,90,90,90)
 	exit()
 
 if len(sys.argv) != 9 :
 	usage()
 
 
-def cub(a,b,c,alpha,beta,gamma):
-	print "Found kpath: G-X-M-G-R-X|M-R"
+def CUB(a,b,c,alpha,beta,gamma):
+	
+	gp_kpath_x = ['G1','X1','M1','G2','R1','X2','R2']
+	gp_kpath_y = ['{/symbol G}','X','M','{/symbol G}','R','X|M','R']
+			
+    	G = [0.0, 0.0, 0.0]
+    	M = [0.5, 0.5, 0.5]
+    	R = [0.5, 0.5, 0.5]
+    	X = [0.0, 0.5, 0.0]
+    	
+    	kpath_hsp = [G,X,M,G,R,X,M,R]
+    	kpath_incr = [incr,incr,incr,incr,incr,1,incr,1]
+	kpath_label = ['{/symbol G}','X','M','{/symbol G}','R','X','M','R']
+		
+    	write_to_file(gp_kpath_x,gp_kpath_y,kpath_hsp,kpath_incr,kpath_label)
+		
+def write_to_file(gp_kpath_x,gp_kpath_y,kpath_hsp,kpath_incr,kpath_label):
+	
+	#----------------------------------------------------------------------------------
+	#for i in range(len(gp_kpath_x)):
+	#	print gp_kpath_x[i], "'"+gp_kpath_y[i]+"'"
+	#----------------------------------------------------------------------------------
+	try:
+		with open(sys.argv[8]+".gp", 'w') as f:
+			for i in range(len(gp_kpath_x)):
+				f.write (gp_kpath_x[i]+"  '"+gp_kpath_y[i]+"'\n")
+	except IOError:
+		print "Could not write file ::", sys.argv[8]+".gp"
+
+	#-------------------------------------------------------------------------------------------------------------------------------------
+	#print "K_POINTS {crystal_b}"
+	#print len(kpath_hsp)
+	#for i in range(len(kpath_hsp)):
+    	#	print ("%8.8f\t%8.8f\t%8.8f\t%d\t! %s " %(kpath_hsp[i][0],kpath_hsp[i][1],kpath_hsp[i][2],kpath_incr[i],kpath_label[i]))	
+    	#-------------------------------------------------------------------------------------------------------------------------------------
 	
 	try:
-    		with open(sys.argv[8], 'w') as f:
-	     	   	f.write ("K_POINTS {crystal_b}'")
-	     	   	f.write (" 8")
-			f.write (" {:10.8f} {:15.8f} {:15.8f} {:5d} {:5s}'.format(0.000,0.000,0.000,10,"! Gamma")")
-			f.write (" {:10.8f} {:15.8f} {:15.8f} {:5d} {:5s}'.format(0.000,0.500,0.000,10,"! X")")
-			f.write (" {:10.8f} {:15.8f} {:15.8f} {:5d} {:5s}'.format(0.500,0.500,0.000,10,"! M")")
-			f.write (" {:10.8f} {:15.8f} {:15.8f} {:5d} {:5s}'.format(0.000,0.000,0.000,10,"! Gamma")")
-			f.write (" {:10.8f} {:15.8f} {:15.8f} {:5d} {:5s}'.format(0.500,0.500,0.500,10,"! R")")
-			f.write (" {:10.8f} {:15.8f} {:15.8f} {:5d} {:5s}'.format(0.000,0.500,0.000,1,"! X")")
-			f.write (" {:10.8f} {:15.8f} {:15.8f} {:5d} {:5s}'.format(0.500,0.500,0.000,10,"! M")")
-			f.write (" {:10.8f} {:15.8f} {:15.8f} {:5d} {:5s}'.format(0.500,0.500,0.500,1,"! R")")
-			
-			
-			
+		with open(sys.argv[8]+".dat", 'w') as f:
+			f.write ("K_POINTS {crystal_b}\n")
+			f.write ("%d\n" % (len(kpath_hsp)))
+			for i in range(len(kpath_hsp)):
+    				f.write ("%8.8f\t%8.8f\t%8.8f\t%d\t! %s\n" %(kpath_hsp[i][0],kpath_hsp[i][1],kpath_hsp[i][2],kpath_incr[i],kpath_label[i]))
+				
 	except IOError:
-    		print "Could not write file ::", "kpath.dat"
-    		
-    		
-    		
-cub (1,1,1,90,90,90)
+		print "Could not write file ::", sys.argv[8]+".dat"
+	
+	
+CUB (1,1,1,90,90,90)
+print "I'm Done !"

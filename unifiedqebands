@@ -1,0 +1,123 @@
+#!/bin/bash
+#
+# Created on Mon May  6 20:57:29 IST 2019
+#
+#
+usage() {
+	echo "Usage : unifiedqebands [band_data(.dat.gnu)] [band_outputfile(.out)] [kpath_file] [dosfile(.dat)] [label]"
+}
+#
+export band_data=$1
+export band_outputfile=$2
+export kpath_file=$3
+export dosfile=$4
+export label=$5
+#
+if [ $# -ne 5 ] ; then
+	usage
+	exit 1;
+fi
+#
+#--------------------------------------------------------------------------------
+# Creating kpath file for plotting
+#--------------------------------------------------------------------------------
+#
+cat > kpath.yp<<EOF
+$(grep -i "high-symmetry point:" $band_outputfile|gawk {'print $8'}|uniq)
+EOF
+#
+gawk '{print $1}' $kpath_file > kpath.xp
+paste -d = kpath.xp kpath.yp > kpath
+#
+#--------------------------------------------------------------------------------
+# Cleanup old kpath temp files
+#--------------------------------------------------------------------------------
+#
+rm -rf kpath.yp kpath.xp
+#
+#--------------------------------------------------------------------------------
+# Read fermi energy from dos data file
+#--------------------------------------------------------------------------------
+#
+fermi=`gawk {'print $9'} $dosfile|xargs`
+#
+#--------------------------------------------------------------------------------
+# Create ticks for the plot
+#--------------------------------------------------------------------------------
+#
+tickmarks=`echo "set xtics (" $(gawk {'print $2$1'} $kpath_file|tr "\n" ","|head -c -1)")"`
+
+gawk -v fermi="$fermi" {'print "set arrow from ",$1",bsy_min-"fermi"-1 to "$1",bsy_max-"fermi"+1 nohead lt 5 lw 1 lc rgb \"red\""'} $kpath_file > ticklines
+
+#-----------------------------------------------------------------------------------
+# Creating gnuplot plot files
+#-----------------------------------------------------------------------------------
+cat > gp.plt <<EOF
+set term png enhanced size 640,480
+set output "$label.png"
+$(cat kpath)
+
+stats "$band_data" using 1 name "bsx" nooutput
+stats "$band_data" using 2 name "bsy" nooutput
+stats "$dosfile" using 1 name "dsx" nooutput
+stats "$dosfile" using 2 name "dsy" nooutput
+
+
+set xtics nomirror
+set ytics nomirror
+
+
+set multiplot layout 1,2 title "Bandstructure and DOS--$label"
+#------------------------------------------------------------------
+# Bandstructure
+#------------------------------------------------------------------
+unset key
+#
+set rmargin 0
+set size 0.7,0.95
+#
+set xrange [bsx_min:bsx_max]
+set yrange [bsy_min-$fermi-1:bsy_max-$fermi+1]
+
+#
+set arrow from 0,0 to  bsx_max,0 nohead lt 12 lc rgb "red" lw 0.5
+#
+$(cat ticklines)
+#
+$(echo $tickmarks)
+#
+set ylabel "Energy (eV)"
+
+plot '$band_data' using 1:(\$2-$fermi) with lines lc rgb "blue"
+#plot '$band_data' using 1:2 with lines
+
+unset xtics
+unset xrange;unset yrange
+unset arrow
+unset ylabel
+#------------------------------------------------------------------
+# DOS
+#------------------------------------------------------------------
+unset key
+#
+set lmargin 12
+set bmargin 2
+set size 0.45,0.95
+#
+set ytics ( " " 0)
+set yrange [bsy_min-$fermi-1:bsy_max-$fermi+1]
+set xrange [dsy_min:dsy_max+1]
+set xlabel "DOS"
+#
+set arrow from 0,0 to  dsy_max+1,0 nohead lt 12 lc rgb "red" lw 0.5
+#
+plot '$dosfile' using 2:(\$1-$fermi) with lines lc rgb "blue"
+#plot '$dosfile' using 2:1 with lines
+
+unset xtics
+unset xrange;unset yrange
+unset arrow
+
+EOF
+gnuplot gp.plt
+echo "Generated $1.png in $PWD"

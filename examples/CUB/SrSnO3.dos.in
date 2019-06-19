@@ -1,0 +1,7 @@
+&DOS
+    outdir = './SrSnO3'
+    fildos = 'SrSnO3.dos.dat'
+      Emin = -50.0,
+      Emax = 50.0,
+    DeltaE = 0.1
+/

@@ -1,0 +1,65 @@
+
+&CONTROL
+                       title = 'SrSnO3'
+                 calculation = 'bands'
+                restart_mode = 'from_scratch'
+                      outdir = './SrSnO3'
+                  pseudo_dir = '../../pseudo'
+                     tstress = .true.
+                     tprnfor = .true.
+                   verbosity = 'high'
+               etot_conv_thr = 1.0D-6
+               forc_conv_thr = 1.0D-5
+/
+
+&SYSTEM
+                       ibrav = 0
+                         nat = 5
+                        ntyp = 3
+                        nbnd = 32
+                     ecutwfc = 60
+/
+
+&ELECTRONS
+                    conv_thr = 1.0D-8
+            diago_cg_maxiter = 5000
+            electron_maxstep = 5000
+             diagonalization = 'cg'
+/
+
+&IONS
+                ion_dynamics = 'bfgs'
+/
+
+&CELL
+                       press = 0.0D0
+              press_conv_thr = 0.1D0
+/
+
+ATOMIC_SPECIES
+Sr 	87.62 	Sr.pbe-spn-rrkjus_psl.1.0.0.UPF
+Sn 	118.71 	Sn.pbe-dn-rrkjus_psl.1.0.0.UPF
+O 	15.9994 	O.pbe-n-rrkjus_psl.1.0.0.UPF
+
+ATOMIC_POSITIONS (crystal)
+  Sr      0.50000000000000   0.50000000000000   0.50000000000000  ! // Sr 
+  Sn      0.00000000000000   0.00000000000000   0.00000000000000  ! // Sn 
+  O       0.00000000000000   0.00000000000000   0.50000000000000  ! // O 
+  O       0.50000000000000   0.00000000000000   0.00000000000000  ! // O 
+  O       0.00000000000000   0.50000000000000   0.00000000000000  ! // O 
+
+CELL_PARAMETERS (angstrom)
+   4.11485900000000   0.00000000000000   0.00000000000000
+   0.00000000000000   4.11485900000000   0.00000000000000
+   0.00000000000000   0.00000000000000   4.11485900000000
+
+K_POINTS {crystal_b}
+8
+0.00000000      0.00000000      0.00000000      20      ! {/symbol G}
+0.00000000      0.50000000      0.00000000      20      ! X
+0.50000000      0.50000000      0.00000000      20      ! M
+0.00000000      0.00000000      0.00000000      20      ! {/symbol G}
+0.50000000      0.50000000      0.50000000      20      ! R
+0.00000000      0.50000000      0.00000000      1       ! X
+0.50000000      0.50000000      0.00000000      20      ! M
+0.50000000      0.50000000      0.50000000      1       ! R

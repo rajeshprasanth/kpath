@@ -1,0 +1,7 @@
+set arrow from  G1,bsy_min-9.912-1 to G1,bsy_max-9.912+1 nohead lt 5 lw 1 lc rgb "red"
+set arrow from  X1,bsy_min-9.912-1 to X1,bsy_max-9.912+1 nohead lt 5 lw 1 lc rgb "red"
+set arrow from  M1,bsy_min-9.912-1 to M1,bsy_max-9.912+1 nohead lt 5 lw 1 lc rgb "red"
+set arrow from  G2,bsy_min-9.912-1 to G2,bsy_max-9.912+1 nohead lt 5 lw 1 lc rgb "red"
+set arrow from  R1,bsy_min-9.912-1 to R1,bsy_max-9.912+1 nohead lt 5 lw 1 lc rgb "red"
+set arrow from  X2,bsy_min-9.912-1 to X2,bsy_max-9.912+1 nohead lt 5 lw 1 lc rgb "red"
+set arrow from  R2,bsy_min-9.912-1 to R2,bsy_max-9.912+1 nohead lt 5 lw 1 lc rgb "red"

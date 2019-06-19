@@ -1,0 +1,5 @@
+&bands
+     filband = 'SrSnO3.bands.dat'
+      outdir = './SrSnO3'
+  no_overlap = .true.
+/

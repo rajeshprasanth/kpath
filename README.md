@@ -1,5 +1,7 @@
 # kpath
 
+[![TravisCI](https://travis-ci.org/pvlib/pvlib-python.svg?branch=master)](https://travis-ci.org/pvlib/pvlib-python)
+
 Python script for generating points of high symmetry in band structure calculation. Currently this code supports Quantum Espresso 
 
 ### Prerequisites

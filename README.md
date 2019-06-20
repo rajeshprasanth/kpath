@@ -2,6 +2,10 @@
 
 [![License: GPL v2](https://img.shields.io/github/license/rajeshprasanth/kpath.svg?color=blue)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 
+[![Build status](https://img.shields.io/gitlab/pipeline/rajeshprasanth/kpath.svg?color=yellow)](https://gitlab.com/rajeshprasanth/kpath/pipelines)
+
+
+
 Python script for generating points of high symmetry in band structure calculation. Currently this code supports Quantum Espresso 
 
 ### Prerequisites

@@ -7,7 +7,7 @@ Python script for generating points of high symmetry in band structure calculati
 Prerequisites for kpath are listed below. 
 
 ```
-Python 2.7 and above 
+Python 2.7 or above 
 ```
 kpath is written with simple python syntax. So, porting the code across the platforms should not be an issue. However, if you face practicalities in using this script, please feel free to report the issue. We will get that sorted out.
 

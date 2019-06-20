@@ -13,6 +13,7 @@ export kpath_file=$3
 export dosfile=$4
 export label=$5
 #
+#
 if [ $# -ne 5 ] ; then
 	usage
 	exit 1;

@@ -4,7 +4,7 @@
 #
 #
 usage() {
-	echo "Usage : unifiedqebands [band_data(.dat.gnu)] [band_outputfile(.out)] [kpath_file] [dosfile(.dat)] [label]"
+	echo "Usage : unifiedqebands [band_data(.dat.gnu)] [band_outputfile(.out)] [kpath_file(.gp)] [dosfile(.dat)] [label]"
 }
 #
 export band_data=$1
@@ -45,7 +45,7 @@ fermi=`gawk {'print $9'} $dosfile|xargs`
 # Create ticks for the plot
 #--------------------------------------------------------------------------------
 #
-tickmarks=`echo "set xtics (" $(gawk {'print $2$1'} $kpath_file|tr "\n" ","|head -c -1)")"`
+tickmarks=`echo "set xtics (" $(gawk -F= {'print $2$1'} $kpath_file|tr "\n" ","|head -c -1)")"`
 
 gawk -v fermi="$fermi" {'print "set arrow from ",$1",bsy_min-"fermi"-1 to "$1",bsy_max-"fermi"+1 nohead lt 5 lw 1 lc rgb \"red\""'} $kpath_file > ticklines
 
@@ -53,8 +53,9 @@ gawk -v fermi="$fermi" {'print "set arrow from ",$1",bsy_min-"fermi"-1 to "$1",b
 # Creating gnuplot plot files
 #-----------------------------------------------------------------------------------
 cat > gp.plt <<EOF
-set term png enhanced size 640,480
-set output "$label.png"
+#set term png enhanced size 640,480
+set terminal postscript eps enhanced color font 'Helvetica,10'
+set output "$label.eps"
 $(cat kpath)
 
 stats "$band_data" using 1 name "bsx" nooutput
@@ -100,7 +101,7 @@ unset ylabel
 #------------------------------------------------------------------
 unset key
 #
-set lmargin 12
+set lmargin 26
 set bmargin 2
 set size 0.45,0.95
 #
@@ -109,7 +110,7 @@ set yrange [bsy_min-$fermi-1:bsy_max-$fermi+1]
 set xrange [dsy_min:dsy_max+1]
 set xlabel "DOS"
 #
-set arrow from 0,0 to  dsy_max+1,0 nohead lt 12 lc rgb "red" lw 0.5
+set arrow from 0,0 to  dsy_max+1,0 nohead lt 3 lc rgb "red" lw 0.5
 #
 plot '$dosfile' using 2:(\$1-$fermi) with lines lc rgb "blue"
 #plot '$dosfile' using 2:1 with lines

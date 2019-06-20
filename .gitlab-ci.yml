@@ -1,0 +1,10 @@
+build:ubuntu:
+  image: espressofoundation/ubuntu:latest
+  script:
+    - python ./kpath.py CUB 1. 1. 1. 90. 90. 90. kpath
+
+
+#build:ubuntu:
+#  image: ubuntu:latest
+#  script:
+#    - pwd

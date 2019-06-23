@@ -1,0 +1,3 @@
+#
+AFLOW_INSTALL_DIR="/usr/share/espresso/aflow/bin/"
+QE_INSTALL_DIR="/usr/share/espresso/bin"

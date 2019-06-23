@@ -1,0 +1,13 @@
+#!/bin/bash
+#
+# Created on Sun Jun 23 02:01:51 IST 2019
+# Author: Rajesh Prashanth Anandavadivel <rajeshprasanth@rediffmail.com>
+#
+printf "Cleaning up files ...... "
+rm -rf *gp *dat
+rm -rf *out 
+rm -rf *gnu *rap
+rm -rf *eps *png *jpeg
+rm -rf ticklines kpath
+rm -rf gp.plt
+printf "Done\n"

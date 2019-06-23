@@ -87,6 +87,26 @@ def BCC (a,b,c,alpha,beta,gamma):
     
     write_to_file(gp_kpath_x,gp_kpath_y,kpath_hsp,kpath_incr,kpath_label)
     
+    
+    
+def TET (a,b,c,alpha,beta,gamma):
+    gp_kpath_x = ['G1','X1','M1','G2','Z1','R1','A1','Z2','R2','A2']
+    gp_kpath_y = ['{/Symbol G}','X','M','{/Symbol G}','Z','R','A','Z|X','R|M','A']
+    
+    G = [0.0, 0.0, 0.0]
+    A = [0.5, 0.5, 0.5]
+    M = [0.5, 0.5, 0.0]
+    R = [0.0, 0.5, 0.5]
+    X = [0.0, 0.5, 0.0]
+    Z = [0.0, 0.0, 0.5]
+    
+    kpath_hsp = [G,X,M,G,Z,R,A,Z,X,R,M,A]
+    kpath_incr = [incr,incr,incr,incr,incr,incr,incr,1,incr,1,incr,1]
+    kpath_label = ['{/Symbol G}','X','M','{/Symbol G}','Z','R','A','Z','X','R','M','A']
+    
+    write_to_file(gp_kpath_x,gp_kpath_y,kpath_hsp,kpath_incr,kpath_label)
+    
+    	
 def write_to_file(gp_kpath_x,gp_kpath_y,kpath_hsp,kpath_incr,kpath_label):
 	
 	#----------------------------------------------------------------------------------
@@ -124,5 +144,7 @@ if sys.argv[1] == "FCC":
     FCC(sys.argv[2],sys.argv[3],sys.argv[4],sys.argv[5],sys.argv[6],sys.argv[7])
 if sys.argv[1] == "BCC":
     BCC(sys.argv[2],sys.argv[3],sys.argv[4],sys.argv[5],sys.argv[6],sys.argv[7])
-    
+if sys.argv[1] == "TET":
+    TET(sys.argv[2],sys.argv[3],sys.argv[4],sys.argv[5],sys.argv[6],sys.argv[7])
+
 print "I'm Done !"

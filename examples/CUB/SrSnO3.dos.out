@@ -1,5 +1,5 @@
 
-     Program DOS v.6.3MaX starts on 19Jun2019 at 19:12:41 
+     Program DOS v.6.3MaX starts on 23Jun2019 at  6:53:30 
 
      This program is part of the open-source Quantum ESPRESSO suite
      for quantum simulation of materials; please cite
@@ -17,22 +17,22 @@
      Please, verify this is what you really want
 
                file Sn.pbe-dn-rrkjus_psl.1.0.0.UPF: wavefunction(s)  5S 4D renormalized
- 
+
      G-vector sticks info
      --------------------
      sticks:   dense  smooth     PW     G-vecs:    dense   smooth      PW
      Sum        1153    1153    349                29423    29423    4801
- 
+
 
      Check: negative/imaginary core charge=   -0.000010    0.000000
 
      Tetrahedra used
 
- 
-     DOS          :     2.82s CPU         2.84s WALL
 
- 
-   This run was terminated on:  19:12:44  19Jun2019            
+     DOS          :     2.74s CPU         2.76s WALL
+
+
+   This run was terminated on:   6:53:33  23Jun2019            
 
 =------------------------------------------------------------------------------=
    JOB DONE.

@@ -14,6 +14,7 @@ Prerequisites for kpath are listed below.
 
 ```
 Python 2.7 or above 
+Gnuplot
 ```
 kpath is written with simple python syntax. So, porting the code across the platforms should not be an issue. However, if you face practicalities in using this script, please feel free to report the issue. We will get that sorted out.
 

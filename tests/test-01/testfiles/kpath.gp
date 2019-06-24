@@ -1,0 +1,7 @@
+G1 = '{/Symbol G}'
+X1 = 'X'
+M1 = 'M'
+G2 = '{/Symbol G}'
+R1 = 'R'
+X2 = 'X|M'
+R2 = 'R'

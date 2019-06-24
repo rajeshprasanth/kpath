@@ -15,13 +15,24 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Foobar.  If not, see <https://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------
-# Created on Sun Jun 23 23:28:29 IST 2019			
+# Created on Sun Jun 23 23:00:04 IST 2019			
 # Author: Rajesh Prashanth Anandavadivel <rajeshprasanth@rediffmail.com>
 #------------------------------------------------------------------------
 #
-for dir in $(ls tests/);do
-cd tests/$dir
-./run_test.sh
-cd ../..
-done
+chmod +x ../../kpath.py
+chmod +x ../../unifiedqebands
+#
+cd testfiles
+../../../kpath.py CUB 4.1148590000 4.1148590000 4.1148590000 90.000 90.000 90.000 kpath > /dev/null
+cd ..
+#
+cd testfiles
+../../../unifiedqebands SrSnO3.bands.dat.gnu SrSnO3.bands.out kpath.gp SrSnO3.dos.dat SrSnO3 > /dev/null
+ps2pdf SrSnO3.eps SrSnO3.pdf
+convert -density 1500 SrSnO3.eps  SrSnO3.png
+convert -density 1500 SrSnO3.eps  SrSnO3.jpeg
+#rm -rf *eps *gp kpath.dat *jpeg *png
+cd ..
+#
+
 

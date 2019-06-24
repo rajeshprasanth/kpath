@@ -16,7 +16,23 @@ chmod +x ../../kpath.py
 ../../kpath.py $($AFLOW_INSTALL_DIR/aflow --edata < SrSnO3.POSCAR|grep "Real space: Bravais Lattice Primitive"|head -n 1|gawk -F= {'print $2'}|xargs) $($AFLOW_INSTALL_DIR/aflow --edata < SrSnO3.POSCAR|grep "Real space a b c alpha beta gamma"|head -n 1|gawk -F: {'print $2'}) kpath > /dev/null
 }
 
-
+gen_poscar() {
+cat > SrSnO3.POSCAR << EOF
+Sr1 Sn1 O3
+1.0
+4.114859 0.000000 0.000000
+0.000000 4.114859 0.000000
+0.000000 0.000000 4.114859
+Sr Sn O
+1 1 3
+direct
+0.500000 0.500000 0.500000 Sr
+0.000000 0.000000 0.000000 Sn
+0.000000 0.000000 0.500000 O
+0.500000 0.000000 0.000000 O
+0.000000 0.500000 0.000000 O
+EOF
+}
 gen_scf () {
 cat > SrSnO3.scf.in << EOF
 &CONTROL
@@ -233,6 +249,10 @@ EOF
 #################################################
 #################################################
 #
+printf "Generating POSCAR...... "
+gen_poscar
+printf "Done \n"
+#
 printf "Running kpath.py ...... "
 gen_kpath
 printf "Done \n"
@@ -287,7 +307,7 @@ printf "Done \n"
 printf "Plotting Bands and Dos ...... "
 chmod +x ../../unifiedqebands
 ../../unifiedqebands SrSnO3.bands.dat.gnu SrSnO3.bands.out kpath.gp SrSnO3.dos.dat SrSnO3
-ps2pdf SrSnO3.ps SrSnO3.pdf
+ps2pdf SrSnO3.eps SrSnO3.pdf
 convert -density 1500 SrSnO3.eps SrSnO3.png
 convert -density 1500 SrSnO3.eps SrSnO3.jpeg
 printf "Done \n"
@@ -297,3 +317,8 @@ printf "Archiving the files ...... "
 rm -rf *.gz
 tar zcvf $(date +"%m%d%y_%H%M%S").tar.gz *
 printf "Done \n"
+#
+mkdir bk
+mv * bk
+mv bk/*gz bk/*sh .
+rm -rf bk

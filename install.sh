@@ -15,13 +15,11 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Foobar.  If not, see <https://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------
-# Created on Sun Jun 23 23:28:29 IST 2019			
+# Created on Sun Jun 23 23:23:03 IST 2019			
 # Author: Rajesh Prashanth Anandavadivel <rajeshprasanth@rediffmail.com>
 #------------------------------------------------------------------------
 #
-for dir in $(ls tests/);do
-cd tests/$dir
-./run_test.sh
-cd ../..
+for file in $(find . -name "*.sh");
+do
+chmod +x $file
 done
-

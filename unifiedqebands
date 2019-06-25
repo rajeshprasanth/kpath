@@ -121,5 +121,90 @@ unset xrange;unset yrange
 unset arrow
 
 EOF
+
+cat > gp.bands.plt <<EOF
+#set term png enhanced size 640,480
+set terminal postscript eps enhanced color font 'Helvetica,10'
+set output "$label.bands.eps"
+$(cat kpath)
+
+stats "$band_data" using 1 name "bsx" nooutput
+stats "$band_data" using 2 name "bsy" nooutput
+
+
+set xtics nomirror
+set ytics nomirror
+
+
+set title "Bandstructure of $label"
+#------------------------------------------------------------------
+# Bandstructure
+#------------------------------------------------------------------
+unset key
+#
+set xrange [bsx_min:bsx_max]
+set yrange [bsy_min-$fermi-1:bsy_max-$fermi+1]
+
+#
+set arrow from 0,0 to  bsx_max,0 nohead lt 12 lc rgb "red" lw 0.5
+#
+$(cat ticklines)
+#
+$(echo $tickmarks)
+#
+set ylabel "Energy (eV)"
+
+plot '$band_data' using 1:(\$2-$fermi) with lines lc rgb "blue"
+#plot '$band_data' using 1:2 with lines
+
+unset xtics
+unset xrange;unset yrange
+unset arrow
+unset ylabel
+EOF
+
+cat > gp.dos.plt <<EOF
+#set term png enhanced size 640,480
+set terminal postscript eps enhanced color font 'Helvetica,10'
+set output "$label.dos.eps"
+
+stats "$dosfile" using 1 name "dsx" nooutput
+stats "$dosfile" using 2 name "dsy" nooutput
+
+
+set xtics nomirror
+set ytics nomirror
+
+
+set title "Density of States of $label"
+#------------------------------------------------------------------
+# DOS
+#------------------------------------------------------------------
+unset key
+#
+#set lmargin 26
+#set bmargin 2
+#set size 0.45,0.95
+#
+#set ytics ( " " 0)
+#set xrange [dsx_min:dsx_max]
+#set yrange [dsy_min:dsy_max+1]
+set xlabel "Energy (ev)"
+set ylabel "DOS (arb. unit)"
+#
+set arrow from 0,0 to  dsy_max+1,0 nohead lt 3 lc rgb "red" lw 0.5
+#
+plot '$dosfile' using (\$1-$fermi):2 with lines lc rgb "blue"
+#plot '$dosfile' using 2:1 with lines
+
+unset xtics
+unset xrange;unset yrange
+unset arrow
+
+EOF
+
 gnuplot gp.plt
-echo "Generated $1.png in $PWD"
+gnuplot gp.bands.plt
+#gnuplot gp.dos.plt
+#rm gp.plt ticklines kpath
+#echo "Generated $1.png in $PWD"

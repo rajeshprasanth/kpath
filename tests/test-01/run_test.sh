@@ -31,6 +31,15 @@ cd testfiles
 ps2pdf SrSnO3.eps SrSnO3.pdf
 convert -density 1500 SrSnO3.eps  SrSnO3.png
 convert -density 1500 SrSnO3.eps  SrSnO3.jpeg
+
+ps2pdf SrSnO3.bands.eps SrSnO3.bands.pdf
+convert -density 1500 SrSnO3.bands.eps  SrSnO3.bands.png
+convert -density 1500 SrSnO3.bands.eps  SrSnO3.bands.jpeg
+
+ps2pdf SrSnO3.eps SrSnO3.dos.pdf
+convert -density 1500 SrSnO3.dos.eps  SrSnO3.dos.png
+convert -density 1500 SrSnO3.dos.eps  SrSnO3.dos.jpeg
+
 #rm -rf *eps *gp kpath.dat *jpeg *png
 cd ..
 #

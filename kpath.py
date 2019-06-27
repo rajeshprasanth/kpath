@@ -106,6 +106,36 @@ def TET (a,b,c,alpha,beta,gamma):
     
     write_to_file(gp_kpath_x,gp_kpath_y,kpath_hsp,kpath_incr,kpath_label)
     
+    
+def BCT (a,b,c,alpha,beta,gamma):
+	if c < a:
+		BCT_1 (a,b,c,alpha,beta,gamma)
+	if c > a:
+		print("None")
+			
+def BCT_1 (a,b,c,alpha,beta,gamma):
+	a = float(a)
+	b = float(b)
+	c = float(c)
+	alpha = float(alpha)
+	beta = float(beta)
+	gamma = float(gamma)
+	
+	gp_kpath_x = ['G1','X1','M1','G2','Z1','P1','N1','Z_12','M2','P2']
+	gp_kpath_y = ['{/Symbol G}','X','M','{/Symbol G}','Z','P','N','Z1','M|X','P']
+	
+	eta = (1 + ((c*c)/(a*a)) )/4
+	G = [0.0, 0.0, 0.0]
+	M = [-0.5, 0.5, 0.5]
+	N = [0.0, 0.5, 0.0]
+	P = [0.25, 0.25, 0.25]
+	X = [0.0, 0.0, 0.5]
+	Z = [eta, eta, -1*eta]
+	Z_1 = [-1*eta, 1-eta, eta]
+	kpath_hsp = [G,X,M,G,Z,P,N,Z_1,M,X,P]
+	kpath_incr = [incr,incr,incr,incr,incr,incr,incr,incr,1,incr,1]
+	kpath_label = ['{/Symbol G}','X','M','{/Symbol G}','Z','P','N','Z1','M','X','P']
+	write_to_file(gp_kpath_x,gp_kpath_y,kpath_hsp,kpath_incr,kpath_label)
     	
 def write_to_file(gp_kpath_x,gp_kpath_y,kpath_hsp,kpath_incr,kpath_label):
 	
@@ -124,8 +154,8 @@ def write_to_file(gp_kpath_x,gp_kpath_y,kpath_hsp,kpath_incr,kpath_label):
 	#print "K_POINTS {crystal_b}"
 	#print len(kpath_hsp)
 	#for i in range(len(kpath_hsp)):
-    #	print ("%8.8f\t%8.8f\t%8.8f\t%d\t! %s " %(kpath_hsp[i][0],kpath_hsp[i][1],kpath_hsp[i][2],kpath_incr[i],kpath_label[i]))	
-    #-------------------------------------------------------------------------------------------------------------------------------------
+    	#	print ("%8.8f\t%8.8f\t%8.8f\t%d\t! %s " %(kpath_hsp[i][0],kpath_hsp[i][1],kpath_hsp[i][2],kpath_incr[i],kpath_label[i]))	
+    	#-------------------------------------------------------------------------------------------------------------------------------------
 	
 	try:
 		with open(sys.argv[8]+".dat", 'w') as f:
@@ -146,5 +176,7 @@ if sys.argv[1] == "BCC":
     BCC(sys.argv[2],sys.argv[3],sys.argv[4],sys.argv[5],sys.argv[6],sys.argv[7])
 if sys.argv[1] == "TET":
     TET(sys.argv[2],sys.argv[3],sys.argv[4],sys.argv[5],sys.argv[6],sys.argv[7])
+if sys.argv[1] == "BCT":
+    BCT(sys.argv[2],sys.argv[3],sys.argv[4],sys.argv[5],sys.argv[6],sys.argv[7])
 
 print "I'm Done !"

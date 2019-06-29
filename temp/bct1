@@ -1,0 +1,24 @@
+'G1','X1','M1','G2','Z','P1','N','Z1','M2','P2'
+'{/Symbol G}','X','M','{/Symbol G}','Z','P','N','Z1','M|X','P'
+
+
+
+
+
+
+def TET (a,b,c,alpha,beta,gamma):
+    gp_kpath_x = ['G1','X1','M1','G2','Z','P1','N','Z1','M2','P2']
+    gp_kpath_y = ['{/Symbol G}','X','M','{/Symbol G}','Z','P','N','Z1','M|X','P']
+    
+    G = [0.0, 0.0, 0.0]
+    A = [0.5, 0.5, 0.5]
+    M = [0.5, 0.5, 0.0]
+    R = [0.0, 0.5, 0.5]
+    X = [0.0, 0.5, 0.0]
+    Z = [0.0, 0.0, 0.5]
+    
+    kpath_hsp = [G,X,M,G,Z,R,A,Z,X,R,M,A]
+    kpath_incr = [incr,incr,incr,incr,incr,incr,incr,1,incr,1,incr,1]
+    kpath_label = ['{/Symbol G}','X','M','{/Symbol G}','Z','R','A','Z','X','R','M','A']
+    
+    write_to_file(gp_kpath_x,gp_kpath_y,kpath_hsp,kpath_incr,kpath_label)
